@@ -3,26 +3,118 @@
 
 import * as React from 'react'
 
+//?? Exercise
+// function UsernameForm({onSubmitUsername}) {
+//   function handleSubmit(event){
+//     event.preventDefault();
+//     onSubmitUsername(event.target.elements.usernameInput.value)
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="usernameInput">Username:</label>
+//         <input id="usernameInput" type="text" />
+//       </div>
+//       <button type="submit">Submit</button>
+//     </form>
+//   )
+// }
+
+// function App() {
+//   const onSubmitUsername = username => alert(`You entered: ${username}`)
+//   return <UsernameForm onSubmitUsername={onSubmitUsername} />
+// }
+
+//?? Extra Credit 1
+// function UsernameForm({onSubmitUsername}) {
+//   const usernameInputRef = React.useRef()
+
+//   function handleSubmit(event) {
+//     event.preventDefault()
+//     onSubmitUsername(usernameInputRef.current.value)
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="usernameInput">Username:</label>
+//         <input id="usernameInput" type="text" ref={usernameInputRef} />
+//       </div>
+//       <button type="submit">Submit</button>
+//     </form>
+//   )
+// }
+
+// function App() {
+//   const onSubmitUsername = username => alert(`You entered: ${username}`)
+//   return <UsernameForm onSubmitUsername={onSubmitUsername} />
+// }
+
+//?? Extra Credit 2
+
+// function UsernameForm({onSubmitUsername}) {
+//   const [error, setError] = React.useState(null)
+
+//   function handleSubmit(event) {
+//     event.preventDefault()
+//     onSubmitUsername(event.target.elements.usernameInput.value)
+//   }
+
+//   function handleChange(event) {
+//     const {value} = event.target
+//     const isLowerCase = value === value.toLowerCase()
+//     setError(isLowerCase ? null : 'Username must be lower case')
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="usernameInput">Username:</label>
+//         <input id="usernameInput" type="text" onChange={handleChange} />
+//       </div>
+//       <div role="alert" style={{color: 'red'}}>
+//         {error}
+//       </div>
+//       <button disabled={Boolean(error)} type="submit">
+//         Submit
+//       </button>
+//     </form>
+//   )
+// }
+
+// function App() {
+//   const onSubmitUsername = username => alert(`You entered: ${username}`)
+//   return (
+//     <div style={{minWidth: 400}}>
+//       <UsernameForm onSubmitUsername={onSubmitUsername} />
+//     </div>
+//   )
+// }
+
+//?? Extra Credit 3
 function UsernameForm({onSubmitUsername}) {
-  // 🐨 add a submit event handler here (`handleSubmit`).
-  // 💰 Make sure to accept the `event` as an argument and call
-  // `event.preventDefault()` to prevent the default behavior of form submit
-  // events (which refreshes the page).
-  //
-  // 🐨 get the value from the username input (using whichever method
-  // you prefer from the options mentioned in the instructions)
-  // 💰 For example: event.target.elements[0].value
-  // 🐨 Call `onSubmitUsername` with the value of the input
+  const [username, setUsername] = React.useState('')
 
-  // 🐨 add the onSubmit handler to the <form> below
+  function handleSubmit(event) {
+    event.preventDefault()
+    onSubmitUsername(username)
+  }
 
-  // 🐨 make sure to associate the label to the input.
-  // to do so, set the value of 'htmlFor' prop of the label to the id of input
+  function handleChange(event) {
+    setUsername(event.target.value.toLowerCase())
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
-        <label>Username:</label>
-        <input type="text" />
+        <label htmlFor="usernameInput">Username:</label>
+        <input
+          id="usernameInput"
+          type="text"
+          onChange={handleChange}
+          value={username}
+        />
       </div>
       <button type="submit">Submit</button>
     </form>
@@ -31,7 +123,11 @@ function UsernameForm({onSubmitUsername}) {
 
 function App() {
   const onSubmitUsername = username => alert(`You entered: ${username}`)
-  return <UsernameForm onSubmitUsername={onSubmitUsername} />
+  return (
+    <div style={{minWidth: 400}}>
+      <UsernameForm onSubmitUsername={onSubmitUsername} />
+    </div>
+  )
 }
 
 export default App
